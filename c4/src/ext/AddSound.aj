@@ -5,29 +5,21 @@ import c4.base.*;
 import c4.model.*;
 
 public privileged aspect AddSound {
-	   private List<Player> players;
+	/** Directory where audio files are stored. */
+	   private static final String SOUND_DIR = "/sound/";
 
-	    public int dropInSlot(int slot, Player player) {
-	        for (int y = HEIGHT - 1; y >= 0; y--) {
-	            if (places[slot][y] == null) {
-	                places[slot][y] = player;
-	                if (changeListener != null) {
-	                    changeListener.checkerDropped(slot, y, player);
-	                }
-	                return y;
-	            }
-	        }
-	        return -1;
-	    }
-	    
-	   pointcut discDropped() : 
-	        execution (* c4.base.BoardPanel.dropInSlot(int, ColorPlayer));
-	   
-	   after() : discDropped() { 
-		   Object[] arg = thisJoinPoint.getArgs();
-		   player 
-		   if(((Object) arg[1]).name() == "Blue")
-		   proceed();
+	   /** Play the given audio file. Inefficient because a file will be 
+	    * (re)loaded each time it is played. */
+	   public static void playAudio(String filename) {
+	     try {
+	         AudioInputStream audioIn = AudioSystem.getAudioInputStream(
+		   AddSound.class.getResource(SOUND_DIR + filename));
+	         Clip clip = AudioSystem.getClip();
+	         clip.open(audioIn);
+	         clip.start();
+	     } catch (UnsupportedAudioFileException 
+	           | IOException | LineUnavailableException e) {
+	         e.printStackTrace();
+	     }
 	   }
-	   
 }
