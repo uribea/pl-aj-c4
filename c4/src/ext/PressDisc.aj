@@ -23,7 +23,7 @@ public privileged aspect PressDisc {
 	   
 	   BoardPanel panel;
 	   pointcut getBoardPanel() :
-		   initialization(* c4.base.BoardPanel.BoardPanel(*));
+		   initialization(* c4.base.BoardPanel.BoardPanel());
 	   BoardPanel around(): getBoardPanel(){
 		   this.panel =  proceed();
 		   return this.panel;
