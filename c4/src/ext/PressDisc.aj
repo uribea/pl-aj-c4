@@ -19,11 +19,11 @@ public privileged aspect PressDisc {
 		   execution(* c4.base.BoardPanel.setDropColor(Color)) && args(color);
 	   void around(Color color): getPlayerColor(color){
 		   this.dropColor =  color;
-	   }
+	   }	
 	   
 	   BoardPanel panel;
 	   pointcut getBoardPanel() :
-		   execution(* c4.base.BoardPanel.BoardPanel(*));
+		   initialization(* c4.base.BoardPanel.BoardPanel(*));
 	   BoardPanel around(): getBoardPanel(){
 		   this.panel =  proceed();
 		   return this.panel;
