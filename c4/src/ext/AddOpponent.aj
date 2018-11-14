@@ -8,7 +8,7 @@ public privileged aspect AddOpponent {
 	private ColorPlayer[] players = new ColorPlayer[2];
 	private C4Dialog virtual;
 	ColorPlayer player2 = new ColorPlayer("Red", Color.RED);;
-	private Boolean blue = true;
+	private Boolean blue = false;
 	
    /** Change the turn after a player’s move. */
    private void C4Dialog.changeTurn(ColorPlayer opponent) {
@@ -17,7 +17,7 @@ public privileged aspect AddOpponent {
        repaint();
    }
    
-   // make copy of the C4Dialog in aspect
+   // make copy of the C4Dialog 
    pointcut getVirtual(): call(C4Dialog.new());
    after() returning(C4Dialog virtual): getVirtual() {
 	   this.virtual = virtual;
@@ -29,11 +29,11 @@ public privileged aspect AddOpponent {
    after(): turn() {
 	   if (blue) {
 		   virtual.changeTurn(players[0]);
-		   System.out.print("Working...");
+		   System.out.println("TURN BLUE...");
 		   blue = false;
 	   } else {
 		   virtual.changeTurn(players[1]);
-		   System.out.print("Working too..");
+		   System.out.println("TURN RED...");
 		   blue = true;
 	   }
    }
@@ -46,7 +46,8 @@ public privileged aspect AddOpponent {
    
    pointcut reset(): execution(void startNewGame());
    after(): reset() {
-	   blue = true;
-	   System.out.print("worked..");
+	   blue = false;
+	   virtual.changeTurn(players[0]);
+	   System.out.print("RESET..");
    }
 }
