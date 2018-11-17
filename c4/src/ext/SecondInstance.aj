@@ -1,4 +1,4 @@
-package c4.ext;
+package ext;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;

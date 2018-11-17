@@ -3,91 +3,47 @@ package ext;
 import java.awt.Color;
 import java.awt.Graphics;
 import c4.base.BoardPanel;
-import c4.model.Board;
 import java.awt.event.*;
 
+public privileged aspect PressDisc extends SecondInstance{
+	   private Color bckColor = new Color(238,238,238);
+	   private MouseAdapter mouseListener;
+	   private int slotm = -1;
+	   private int BoardPanel.slotM = -1;
+	   private void BoardPanel.addMousePressed(MouseAdapter mouseAdapter){}
+	   pointcut discPressed( Graphics gs, BoardPanel pane) :
+		   execution (void c4.base.BoardPanel.drawDroppableCheckers(Graphics))
+		   && args(gs)
+		   && this(pane);
+	    
+	   after( Graphics gs, BoardPanel pane): discPressed(gs,pane){
+		   if(pane.slotM>=0) {
+			   pane.drawChecker(this.g,this.bckColor, pane.slotM, -1, 2);
 
-
-public privileged aspect PressDisc {
-		//private static final boolean DISABLED = true;
-	   private Graphics g;
-	   private BoardPanel panel;
-	   private Color dropColor;
-	   
-	   
-	   pointcut getGraphics(Graphics g) :
-		   execution(* c4.base.BoardPanel.paint(Graphics)) && args(g);
-	   void around(Graphics g): getGraphics(g){
-		   this.g =  g;
-		   proceed(g);
-	   }
-	   
-	   pointcut getPlayerColor(Color color) :
-		   execution(* c4.base.BoardPanel.setDropColor(Color)) && args(color);
-	   void around(Color color): getPlayerColor(color){
-		   this.dropColor =  color;
-	   }	
-
-	   pointcut discPressed(int slot) :
-	     call (boolean c4.model.Board.isSlotOpen(int))
-	     && args(slot) 
-	     && within(c4.base.BoardPanel) 
-	     //&& !withincode(* c4.base.BoardPanel.drawDroppableCheckers(*))
-	     ;//&& withincode(* c4.base.BoardPanel.ClickListener.MouseClicked(*));
-	   
-	   //boolean around(int slot) /*returning(int slot)*/ : 
-		/*   discPressed(slot){
-		   boolean ava = proceed(slot);
-			   if (ava) {
-			   panel.drawChecker(g, dropColor, slot, -1, 3);
-			   panel.repaint();
-			   System.out.println("after repaint");
-			   }
-		   return ava;
-	   }*/
-
-	   pointcut hithere() :
-		     execution (int c4.base.BoardPanel.locateSlot(int,int))
-		      
-		     && within(c4.base.BoardPanel) 
-		     
-		     //&& withincode(* c4.base.BoardPanel.MouseAdapter(*))
-		     ;//&& withincode(* c4.base.BoardPanel.ClickListener.MouseClicked(*));
-		   
-		   after() returning(int slot) /*returning(int slot)*/ : 
-			   hithere(){
-		   
-		   
-			   if (slot>=0) {
-				   panel.drawChecker(g, dropColor, slot, -1, 3);
-				   panel.repaint();
-				   System.out.println("after repaint");
-			   }
+			   pane.drawChecker(this.g,this.dropColor, pane.slotM, -1, 7);
 		   }
-		 
-		   pointcut hthere(MouseEvent e) :
-			     execution (int c4.base.BoardPanel.mouseClicked(MouseEvent))
-			     && args(e)
-			     && within(c4.base.BoardPanel) 
-			     
-			     //&& withincode(* c4.base.BoardPanel.MouseAdapter(*))
-			     ;//&& withincode(* c4.base.BoardPanel.ClickListener.MouseClicked(*));
-			   
-			   void around(MouseEvent e) /*returning(int slot)*/ : 
-				   hthere(e){
-			   
-			   
-				      //panel.drawChecker(g, dropColor, slot, -1, 3);
-					   panel.repaint();
-					   System.out.println("after repaint");
-				   
-			   }
+		   System.out.println("at draw "+pane.slotM + this.dropColor+this.g);
+		   pane.slotM=-1;
+	   }
+
+	   pointcut buttonPressed(BoardPanel pane):
+		   execution(BoardPanel.new(..))&&this(pane);
 		   
-		   
-	   pointcut getBoardPanel() :
-		   call(BoardPanel.new(*));
-	   after() returning(BoardPanel panel) : getBoardPanel(){
-		   this.panel = panel;
+	   after(BoardPanel pane):buttonPressed(pane){
+		 	   pane.addMouseListener(new MouseAdapter() {
+		 		   @Override
+		 		   public void mousePressed(MouseEvent e) {
+		 			   System.out.println("pressed");
+		 			   pane.slotM = (Integer)pane.locateSlot(e.getX(), e.getY());
+		 			   if (pane.slotM >= 0 && pane.board.isSlotOpen(pane.slotM))
+		 				  //pane.slotM = pane.slotM;
+		 				   pane.repaint();
+		 			   
+		 		   }   
+		 	   });
 	   }
 
 }
+
+
+

@@ -1,4 +1,4 @@
-package c4.ext;
+package ext;
 
 import c4.model.Player;
 import c4.model.Board;

@@ -14,7 +14,7 @@ public privileged aspect AddOpponent {
    private void C4Dialog.changeTurn(ColorPlayer opponent) {
        player = opponent;
        showMessage(player.name() + "'s turn.");
-       repaint();
+       //repaint();
    }
    
    // make copy of the C4Dialog 
