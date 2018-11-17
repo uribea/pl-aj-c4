@@ -40,11 +40,11 @@ public privileged abstract aspect SecondInstance {
 		   proceed(g);
 	   }
 	   
-	   pointcut getPlayerColor(Color color) :
+	 /*  pointcut getPlayerColor(Color color) :
 		   execution(* c4.base.BoardPanel.setDropColor(Color)) && args(color);
 	   void around(Color color): getPlayerColor(color){
 		   this.dropColor =  color;
-	   }	
+	   }*/	
 	   pointcut getBoardPanel() :
 		   call(BoardPanel.new(*));
 	   after() returning(BoardPanel panel) : getBoardPanel(){

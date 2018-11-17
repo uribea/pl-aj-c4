@@ -14,10 +14,10 @@ public privileged aspect EndGame extends SecondInstance {
 	after(): discDropped(){
 		int actualCurr=(currPlayer+1)%2;
 		boolean isDraw=board.isFull();
-		boolean isWonBy=board.isWonBy(players[currPlayer]);
+		boolean isWonBy=board.isWonBy(virtual.player);
 		if(isWonBy)
 		{
-			virtual.showMessage(players[currPlayer].name() + " won!:) ");
+			virtual.showMessage(virtual.player.name() + " won!:) ");
 			gameWon=true;
 		}
 		if(isDraw)
