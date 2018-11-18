@@ -1,7 +1,5 @@
 package c4.base;
 
-//import c4.ext
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

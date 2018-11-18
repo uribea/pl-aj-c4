@@ -25,14 +25,7 @@ public privileged abstract aspect SecondInstance {
 		   this.players[0] = this.virtual.player;
 
 	   }
-	   /*pointcut getGame(): call(C4Dialog.new());
-	    after() returning(C4Dialog game): getGame(){
-	        this.game = game;
-	        this.board = game.board;
-	        players =  new LinkedList<>();
-	        players.add(this.game.player);
-	        players.add(new ColorPlayer("Red", Color.RED));
-	    }*/
+	   
 	   pointcut getGraphics(Graphics g) :
 		   execution(* c4.base.BoardPanel.paint(Graphics)) && args(g);
 	   void around(Graphics g): getGraphics(g){
@@ -40,11 +33,7 @@ public privileged abstract aspect SecondInstance {
 		   proceed(g);
 	   }
 	   
-	 /*  pointcut getPlayerColor(Color color) :
-		   execution(* c4.base.BoardPanel.setDropColor(Color)) && args(color);
-	   void around(Color color): getPlayerColor(color){
-		   this.dropColor =  color;
-	   }*/	
+
 	   pointcut getBoardPanel() :
 		   call(BoardPanel.new(*));
 	   after() returning(BoardPanel panel) : getBoardPanel(){

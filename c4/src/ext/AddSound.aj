@@ -12,23 +12,24 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import c4.model.*;
 import c4.base.*;
 
-public privileged aspect AddSound {
+public privileged aspect AddSound extends SecondInstance{
 	/** Directory where audio files are stored. */
 	   private static final String SOUND_DIR = "/sound/";
 
-	   pointcut dropSound() :
-	        execution (* c4.model.Board.dropInSlot(int, Player));
+	   pointcut dropSound(int i,Player player) :
+	        execution (* c4.model.Board.dropInSlot(int, Player))&&args(i,player);
 	   
-	   int around(): dropSound(){
-		   Object[] arg = thisJoinPoint.getArgs();
-		   Player player = (Player) arg[1];
-		   boolean end = false;
-		   if(end)
-			   end = false;
-		   else
-			   playAudio(player.name + ".wav");
+	   int around(int i,Player player): dropSound(i,player){
+		   //boolean end = false;
+		   int j =  proceed(i,player);
 		   
-		   return proceed();
+		   playAudio(player.name + ".wav");
+		   if(virtual.board.isWonBy(player)) {
+			   playAudio("Applause.wav");
+			   return -1;
+		   }
+		   return j;
+		   
 	   }
 	
 
