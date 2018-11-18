@@ -1,3 +1,12 @@
+/**
+
+ *Contains the implementation for adding a move to the game 
+
+ * @author  Perla De la O ,Alan Uribe, Germain Vargas
+
+ *
+
+ */
 package ext;
 
 privileged aspect LogMove {

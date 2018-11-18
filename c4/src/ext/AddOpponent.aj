@@ -1,3 +1,12 @@
+/**
+
+ *Contains the implementation for adding a second opponent to the original connect 5 java file 
+
+ * @author  Perla De la O ,Alan Uribe, Germain Vargas
+
+ *
+
+ */
 package ext;
 import java.awt.Color;
 import c4.base.*;
@@ -8,7 +17,7 @@ public privileged aspect AddOpponent extends SecondInstance {
    /** Two players of the game. */
 	private Boolean blue = false;
 	
-   /** Change the turn after a player’s move. */
+   /** Change the turn after a playerï¿½s move. */
    private void C4Dialog.changeTurn(ColorPlayer opponent) {
 	       player = opponent;
 	       if(!board.isFull())

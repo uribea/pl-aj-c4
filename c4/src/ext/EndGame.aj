@@ -1,4 +1,12 @@
-package ext;
+/**
+
+ *Contains the implementation for a winning game, displays the winner and if there is a draw  
+
+ * @author  Perla De la O ,Alan Uribe, Germain Vargas
+
+ *
+
+ */package ext;
 
 import c4.model.Player;
 import c4.model.Board;

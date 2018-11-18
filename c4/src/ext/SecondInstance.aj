@@ -1,4 +1,12 @@
-package ext;
+/**
+
+ *Contains variables that are used throughout the aspects, acts as a super class for all classes 
+
+ * @author  Perla De la O ,Alan Uribe, Germain Vargas
+
+ *
+
+ */package ext;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;

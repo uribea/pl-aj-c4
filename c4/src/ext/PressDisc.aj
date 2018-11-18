@@ -1,4 +1,12 @@
-package ext;
+/**
+
+ *Contains the implementation for adding a disc for both player one and player 2
+
+ * @author  Perla De la O ,Alan Uribe, Germain Vargas
+
+ *
+
+ */package ext;
 
 import java.awt.Color;
 import java.awt.Graphics;

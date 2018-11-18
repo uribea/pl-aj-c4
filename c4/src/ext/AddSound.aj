@@ -1,3 +1,12 @@
+/**
+
+ *Contains the implementation for adding sound to the players and when someone wins the game 
+
+ * @author  Perla De la O ,Alan Uribe, Germain Vargas
+
+ *
+
+ */
 package ext;
 
 import java.awt.List;
